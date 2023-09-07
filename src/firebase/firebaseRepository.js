@@ -2,6 +2,8 @@ import { db } from "./firebaseConfiguration.js";
 import { collection, getDocs } from "firebase/firestore";
 import { sanitize } from "../utilities.js";
 
+export const fbClubsCollection = collection(db, "clubs-2023");
+
 export async function readClubsFromFirestore() {
     const clubs = [];
 
