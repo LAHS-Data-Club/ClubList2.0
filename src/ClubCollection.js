@@ -16,6 +16,7 @@ export default function ClubCollection() {
 
     return (
         <div>
+            <h1 className="text-4xl">LAHS Club List</h1>
             {error && (
                 <p>
                     Oops, something went wrong loading the clubs from Firebase!
@@ -43,7 +44,7 @@ export default function ClubCollection() {
                 </div>
             )}
             {value && (
-                <div>
+                <div className="flex flex-wrap">
                     {value.docs.map((doc) => (
                         <ClubCard
                             {...getCleanedClubData(doc)}

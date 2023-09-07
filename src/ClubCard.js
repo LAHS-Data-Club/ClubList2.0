@@ -9,7 +9,7 @@ export default function ClubCard({
     location,
 }) {
     return (
-        <div>
+        <div className="p-5 m-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl max-w-lg">
             <p>{name}</p>
             <p>{description}</p>
             <p>{advisor}</p>
