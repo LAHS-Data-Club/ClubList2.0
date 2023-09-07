@@ -1,0 +1,18 @@
+import { firestoreDb } from "./firebaseConfiguration.js";
+import { collection, getDocs } from "firebase/firestore";
+import { sanitize } from "../utilities.js";
+
+export async function readClubsFromFirestore() {
+    const clubs = [];
+
+    const querySnapshot = await getDocs(collection(firestoreDb, "clubs-2023"));
+
+    querySnapshot.forEach((doc) => {
+        let clubData = { ...doc.data(), id: doc.id };
+        clubData.name = sanitize(clubData.name);
+        clubData.description = sanitize(clubData.description);
+        console.log(clubData);
+
+        clubs.push(clubData);
+    });
+}
