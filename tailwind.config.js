@@ -5,7 +5,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 display: "Montserrat, ui-sans-serif",
-                body: "ui-sans-serif",
+                body: "Catamaran, ui-sans-serif",
             },
         },
     },

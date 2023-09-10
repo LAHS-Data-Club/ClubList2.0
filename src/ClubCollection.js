@@ -1,12 +1,9 @@
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import { fbClubsCollection } from "./firebase/firebaseRepository";
-import { sanitize } from "./utilities";
 import ClubCard from "./ClubCard";
 
 function getCleanedClubData(doc) {
     let clubData = { ...doc.data(), id: doc.id };
-    clubData.name = sanitize(clubData.name);
-    clubData.description = sanitize(clubData.description);
     console.log(clubData);
     return clubData;
 }
