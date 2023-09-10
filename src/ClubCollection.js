@@ -1,15 +1,55 @@
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import { fbClubsCollection } from "./firebase/firebaseRepository";
+import { useState, useEffect } from "react";
 import ClubCard from "./ClubCard";
+import Fuse from "fuse.js";
 
 function getCleanedClubData(doc) {
     let clubData = { ...doc.data(), id: doc.id };
-    console.log(clubData);
+    // console.log(clubData);
     return clubData;
 }
 
 export default function ClubCollection() {
     const [value, loading, error] = useCollectionOnce(fbClubsCollection);
+    const [allData, setAllData] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
+
+    const options = {
+        includeScore: true,
+        includeMatches: true,
+        threshold: 0.2,
+        keys: ["name", "description"],
+    };
+
+    const fuse = new Fuse(allData, options);
+
+    useEffect(() => {
+        if (value) {
+            let data = value.docs.map((doc) => getCleanedClubData(doc));
+            setAllData(data);
+        }
+    }, [value]);
+
+    useEffect(() => {
+        fuse.setCollection(allData);
+        setSearchResults(allData);
+    }, [allData]);
+
+    const handleSearch = (event) => {
+        const { value } = event.target;
+
+        // If the user searched for an empty string,
+        // display all data.
+        if (value.length === 0) {
+            setSearchResults(allData);
+            return;
+        }
+
+        const results = fuse.search(value);
+        const items = results.map((result) => result.item);
+        setSearchResults(items);
+    };
 
     return (
         <div className="p-5">
@@ -43,13 +83,17 @@ export default function ClubCollection() {
                 </div>
             )}
             {value && (
-                <div className="grid grid-cols-4 gap-4">
-                    {value.docs.map((doc) => (
-                        <ClubCard
-                            {...getCleanedClubData(doc)}
-                            key={doc.id}
-                        ></ClubCard>
-                    ))}
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Search for clubs!"
+                        onChange={handleSearch}
+                    />
+                    <div className="grid grid-cols-4 gap-4">
+                        {searchResults.map((club) => (
+                            <ClubCard {...club} key={club.id}></ClubCard>
+                        ))}
+                    </div>
                 </div>
             )}
             <div></div>
