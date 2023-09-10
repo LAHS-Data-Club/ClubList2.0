@@ -3,7 +3,7 @@ import ClubCollection from "./ClubCollection";
 
 export default function App() {
     return (
-        <div className="w-100 h-100 bg-gradient-to-br from-rose-100 to-fuchsia-300 m-0 p-0">
+        <div className="w-full h-full min-h-[100vh] bg-gradient-to-br from-sky-100 to-blue-300 m-0 p-0">
             <ClubCollection></ClubCollection>
         </div>
     );
