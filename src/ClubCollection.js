@@ -83,11 +83,12 @@ export default function ClubCollection() {
                 </div>
             )}
             {value && (
-                <div>
+                <div className="flex-col flex">
                     <input
                         type="text"
                         placeholder="Search for clubs!"
                         onChange={handleSearch}
+                        className="width-100 bg-white/50 mb-5 p-3 rounded-md drop-shadow-md focus:outline-none focus:drop-shadow-lg focus:bg-white/70"
                     />
                     <div className="grid grid-cols-4 gap-4">
                         {searchResults.map((club) => (
