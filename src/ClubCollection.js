@@ -15,8 +15,10 @@ export default function ClubCollection() {
     const [value, loading, error] = useCollectionOnce(fbClubsCollection);
 
     return (
-        <div>
-            <h1 className="text-4xl">LAHS Club List</h1>
+        <div className="p-5">
+            <h1 className="text-4xl font-display font-bold text-center w-100 mb-10">
+                LAHS Club List
+            </h1>
             {error && (
                 <p>
                     Oops, something went wrong loading the clubs from Firebase!
@@ -44,7 +46,7 @@ export default function ClubCollection() {
                 </div>
             )}
             {value && (
-                <div className="flex flex-wrap">
+                <div className="grid grid-cols-4 gap-4">
                     {value.docs.map((doc) => (
                         <ClubCard
                             {...getCleanedClubData(doc)}

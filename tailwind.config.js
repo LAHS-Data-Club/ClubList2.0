@@ -4,7 +4,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                display: "Oswald, ui-serif",
+                display: "Montserrat, ui-sans-serif",
                 body: "ui-sans-serif",
             },
         },
