@@ -53,9 +53,14 @@ export default function ClubCollection() {
 
     return (
         <div className="p-5">
-            <h1 className="text-4xl font-display font-bold text-center w-100 mb-10">
-                LAHS Club List
-            </h1>
+            <div className="w-100 mb-10 mt-12">
+                <div className="text-4xl font-display font-bold text-left ">
+                    LAHS Club List
+                </div>
+                <div className="italic font-body mt-1">
+                    A project by the Data Club.
+                </div>
+            </div>
             {error && (
                 <p>
                     Oops, something went wrong loading the clubs from Firebase!
@@ -88,7 +93,7 @@ export default function ClubCollection() {
                         type="text"
                         placeholder="Search for clubs!"
                         onChange={handleSearch}
-                        className="width-100 bg-white/50 mb-5 p-3 rounded-md drop-shadow-md focus:outline-none focus:drop-shadow-lg focus:bg-white/70"
+                        className="width-100 bg-white/50 mb-5 p-3 rounded-md drop-shadow-md focus:outline-none focus:drop-shadow-lg focus:bg-white/70 font-body"
                     />
                     <div className="grid grid-cols-4 gap-4">
                         {searchResults.map((club) => (
