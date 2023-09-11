@@ -15,7 +15,7 @@ export default function ClubCard({
     }
 
     return (
-        <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl max-w-lg font-body flex flex-col justify-between">
+        <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body flex flex-col justify-between">
             <div>
                 <p className="font-display text-xl font-bold">{name}</p>
                 <div className="my-2">
@@ -66,7 +66,7 @@ export default function ClubCard({
             </div>
             <a
                 href={generateMailto(contact, name)}
-                className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70"
+                className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

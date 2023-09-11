@@ -3,6 +3,7 @@ import { fbClubsCollection } from "./firebase/firebaseRepository";
 import { useState, useEffect } from "react";
 import ClubCard from "./ClubCard";
 import Fuse from "fuse.js";
+import Search from "./Search";
 
 function getCleanedClubData(doc) {
     let clubData = { ...doc.data(), id: doc.id };
@@ -19,7 +20,8 @@ export default function ClubCollection() {
         includeScore: true,
         includeMatches: true,
         threshold: 0.2,
-        keys: ["name", "description"],
+        ignoreLocation: true,
+        keys: ["name", "description", "date", "time"],
     };
 
     const fuse = new Fuse(allData, options);
@@ -34,6 +36,7 @@ export default function ClubCollection() {
     useEffect(() => {
         fuse.setCollection(allData);
         setSearchResults(allData);
+        // console.log(searchResults);
     }, [allData]);
 
     const handleSearch = (event) => {
@@ -89,12 +92,7 @@ export default function ClubCollection() {
             )}
             {value && (
                 <div className="flex-col flex">
-                    <input
-                        type="text"
-                        placeholder="Search for clubs!"
-                        onChange={handleSearch}
-                        className="width-100 bg-white/50 mb-5 p-3 rounded-md drop-shadow-md focus:outline-none focus:drop-shadow-lg focus:bg-white/70 font-body"
-                    />
+                    <Search onChange={handleSearch}></Search>
                     <div className="grid grid-cols-4 gap-4">
                         {searchResults.map((club) => (
                             <ClubCard {...club} key={club.id}></ClubCard>

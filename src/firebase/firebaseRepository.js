@@ -13,7 +13,7 @@ export async function readClubsFromFirestore() {
         let clubData = { ...doc.data(), id: doc.id };
         clubData.name = sanitize(clubData.name);
         clubData.description = sanitize(clubData.description);
-        console.log(clubData);
+        // console.log(clubData);
 
         clubs.push(clubData);
     });
