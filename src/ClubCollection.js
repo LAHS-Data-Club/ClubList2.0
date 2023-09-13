@@ -56,11 +56,11 @@ export default function ClubCollection() {
 
     return (
         <div className="p-5">
-            <div className="w-100 mb-10 mt-12">
-                <div className="text-4xl font-display font-bold text-left ">
+            <div className="w-100 mb-6 mt-8 lg:mb-10 lg:mt-12">
+                <div className="text-4xl font-display font-bold text-center lg:text-left ">
                     LAHS Club List
                 </div>
-                <div className="italic font-body mt-1">
+                <div className="italic font-body mt-1 text-center lg:text-left">
                     A project by the Data Club.
                 </div>
             </div>
@@ -93,7 +93,7 @@ export default function ClubCollection() {
             {value && (
                 <div className="flex-col flex">
                     <Search onChange={handleSearch}></Search>
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid lg:grid-cols-4 gap-4">
                         {searchResults.map((club) => (
                             <ClubCard {...club} key={club.id}></ClubCard>
                         ))}
