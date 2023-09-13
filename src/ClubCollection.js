@@ -14,7 +14,16 @@ function getCleanedClubData(doc) {
 export default function ClubCollection() {
     const [value, loading, error] = useCollectionOnce(fbClubsCollection);
     const [allData, setAllData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [dateFilters, setDateFilters] = useState([]);
+    const [timeFilters, setTimeFilters] = useState([]);
+    const [searchFields, setSearchFields] = useState([
+        "name",
+        "description",
+        "date",
+        "time",
+    ]);
 
     const options = {
         includeScore: true,
@@ -26,6 +35,7 @@ export default function ClubCollection() {
 
     const fuse = new Fuse(allData, options);
 
+    // Once clubs are loaded, set them to State
     useEffect(() => {
         if (value) {
             let data = value.docs.map((doc) => getCleanedClubData(doc));
@@ -33,25 +43,59 @@ export default function ClubCollection() {
         }
     }, [value]);
 
+    // When allData is set, give collection to search and display
     useEffect(() => {
         fuse.setCollection(allData);
         setSearchResults(allData);
         // console.log(searchResults);
     }, [allData]);
 
-    const handleSearch = (event) => {
-        const { value } = event.target;
+    // When the search query changes, update the data
+    useEffect(() => {
+        let query = {
+            $and: [],
+        };
 
-        // If the user searched for an empty string,
-        // display all data.
-        if (value.length === 0) {
+        // normal fuzzy search
+        if (searchQuery.length !== 0) {
+            query.$and.push({
+                $or: searchFields.map((field) => ({
+                    [field]: searchQuery,
+                })),
+            });
+        }
+
+        // date filters
+        if (dateFilters.length > 0) {
+            query.$and.push({
+                $or: dateFilters.map((filter) => ({ date: filter })),
+            });
+        }
+
+        // time filters
+        if (timeFilters.length > 0) {
+            query.$and.push({
+                $or: timeFilters.map((filter) => ({ time: filter })),
+            });
+        }
+
+        if (query.$and.length === 0) {
             setSearchResults(allData);
             return;
         }
 
-        const results = fuse.search(value);
+        console.log(query);
+
+        let results = fuse.search(query);
         const items = results.map((result) => result.item);
+
         setSearchResults(items);
+    }, [searchQuery, searchFields, dateFilters, timeFilters]);
+
+    const handleSearch = (event) => {
+        const { value } = event.target;
+
+        setSearchQuery(value);
     };
 
     return (
