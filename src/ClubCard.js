@@ -19,7 +19,7 @@ export default function ClubCard({
             <div className="text-sm lg:text-base">
                 <p className="font-display text-base lg:text-xl font-bold">{name}</p>
                 <div className=" my-2">
-                    <div className="lg:flex items-end gap-1">
+                    <div className="flex items-end gap-1">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
