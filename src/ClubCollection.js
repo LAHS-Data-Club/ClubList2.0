@@ -11,6 +11,11 @@ function getCleanedClubData(doc) {
     return clubData;
 }
 
+// returns a list of unique values of that property
+function getUniqueValues(allData, property) {
+    return [...new Set(allData.map((doc) => doc[property]))];
+}
+
 export default function ClubCollection() {
     const [value, loading, error] = useCollectionOnce(fbClubsCollection);
     const [allData, setAllData] = useState([]);
@@ -136,7 +141,15 @@ export default function ClubCollection() {
             )}
             {value && (
                 <div className="flex-col flex">
-                    <Search onChange={handleSearch}></Search>
+                    <Search
+                        onChange={handleSearch}
+                        setDateFilters={setDateFilters}
+                        setTimeFilters={setTimeFilters}
+                        dateFilters={dateFilters}
+                        timeFilters={timeFilters}
+                        dateValues={getUniqueValues(allData, "date")}
+                        timeValues={getUniqueValues(allData, "time")}
+                    ></Search>
                     <div className="grid grid-cols-4 gap-4">
                         {searchResults.map((club) => (
                             <ClubCard {...club} key={club.id}></ClubCard>

@@ -1,21 +1,47 @@
 import { useState } from "react";
 
-export default function Search({ onChange }) {
+export default function Search({
+    onChange,
+    setDateFilters,
+    setTimeFilters,
+    dateFilters,
+    timeFilters,
+    dateValues,
+    timeValues,
+}) {
     const [open, setOpen] = useState(true); // for testing: TODO: turn back to false
 
     const handleOpen = () => {
         setOpen(!open);
     };
 
+    const handleCheckOnChange = (e, name, isDate) => {
+        if (isDate) {
+            if (e.target.checked) {
+                setDateFilters([...dateFilters, name]);
+            } else {
+                setDateFilters(dateFilters.filter((date) => date !== name));
+            }
+        } else {
+            if (e.target.checked) {
+                setTimeFilters([...timeFilters, name]);
+            } else {
+                setTimeFilters(timeFilters.filter((time) => time !== name));
+            }
+        }
+    };
+
     return (
         <div className="flex flex-col w-full mb-5">
             <div className="flex">
+                {/* Search bar */}
                 <input
                     type="text"
                     placeholder="Search for clubs!"
                     onChange={onChange}
                     className="w-full bg-white/50 p-3 rounded-md drop-shadow-md focus:outline-none focus:drop-shadow-lg focus:bg-white/70 font-body transition duration-100"
                 />
+                {/* Filter button */}
                 <div className="ms-2">
                     <button
                         onClick={handleOpen}
@@ -42,84 +68,56 @@ export default function Search({ onChange }) {
                 </div>
             </div>
             {open && (
+                // Popup filter
                 <div className="relative">
                     <div
-                        className="font-body absolute z-10 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white/70 backdrop-blur shadow-lg ring-1 ring-black ring-opacity-5 text-black focus:outline-none"
+                        className="font-body absolute z-10 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white/70 backdrop-blur drop-shadow-lg text-black focus:outline-none flex flex-col"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="menu-button"
                         tabindex="-1"
                     >
-                        <div class="py-1" role="none">
-                            <a
-                                href="#"
-                                class="text-gray-700 block px-4 py-2 text-sm"
-                                role="menuitem"
-                                tabindex="-1"
-                                id="menu-item-0"
-                            >
-                                Edit
-                            </a>
-                            <a
-                                href="#"
-                                class="text-gray-700 block px-4 py-2 text-sm"
-                                role="menuitem"
-                                tabindex="-1"
-                                id="menu-item-1"
-                            >
-                                Duplicate
-                            </a>
+                        <div>
+                            <div>Days</div>
+                            <div className="flex">
+                                {dateValues.map((day) => (
+                                    <div>
+                                        <input
+                                            id={day + "_cb"}
+                                            type="checkbox"
+                                            onChange={(e) =>
+                                                handleCheckOnChange(
+                                                    e,
+                                                    day,
+                                                    true
+                                                )
+                                            }
+                                        ></input>
+                                        <label for={day + "_cb"}>{day}</label>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div class="py-1" role="none">
-                            <a
-                                href="#"
-                                class="text-gray-700 block px-4 py-2 text-sm"
-                                role="menuitem"
-                                tabindex="-1"
-                                id="menu-item-2"
-                            >
-                                Archive
-                            </a>
-                            <a
-                                href="#"
-                                class="text-gray-700 block px-4 py-2 text-sm"
-                                role="menuitem"
-                                tabindex="-1"
-                                id="menu-item-3"
-                            >
-                                Move
-                            </a>
-                        </div>
-                        <div class="py-1" role="none">
-                            <a
-                                href="#"
-                                class="text-gray-700 block px-4 py-2 text-sm"
-                                role="menuitem"
-                                tabindex="-1"
-                                id="menu-item-4"
-                            >
-                                Share
-                            </a>
-                            <a
-                                href="#"
-                                class="text-gray-700 block px-4 py-2 text-sm"
-                                role="menuitem"
-                                tabindex="-1"
-                                id="menu-item-5"
-                            >
-                                Add to favorites
-                            </a>
-                        </div>
-                        <div class="py-1" role="none">
-                            <a
-                                href="#"
-                                class="text-gray-700 block px-4 py-2 text-sm"
-                                role="menuitem"
-                                tabindex="-1"
-                                id="menu-item-6"
-                            >
-                                Delete
-                            </a>
+                        <div>
+                            <div>Times</div>
+                            <div className="flex">
+                                {timeValues.map((time) => (
+                                    <div>
+                                        <input
+                                            id={time + "_cb"}
+                                            type="checkbox"
+                                            onChange={(e) =>
+                                                handleCheckOnChange(
+                                                    e,
+                                                    time,
+                                                    false
+                                                )
+                                            }
+                                        ></input>
+                                        <label for={time + "_cb"}>{time}</label>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
