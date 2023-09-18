@@ -16,13 +16,13 @@ export default function Search({
     };
 
     const handleCheckOnChange = (e, name, isDate) => {
-        name = name.lower();
+        name = name.toLowerCase();
         if (isDate) {
             if (e.target.checked) {
                 setDateFilters([...dateFilters, name]);
             } else {
                 setDateFilters(
-                    dateFilters.filter((date) => date.lower() !== name)
+                    dateFilters.filter((date) => date.toLowerCase() !== name)
                 );
             }
         } else {
@@ -30,7 +30,7 @@ export default function Search({
                 setTimeFilters([...timeFilters, name]);
             } else {
                 setTimeFilters(
-                    timeFilters.filter((time) => time.lower() !== name)
+                    timeFilters.filter((time) => time.toLowerCase() !== name)
                 );
             }
         }
@@ -84,7 +84,7 @@ export default function Search({
                     >
                         <div className="py-4">
                             <div className="font-bold text-lg mb-1">Days</div>
-                            <div className="flex">
+                            <div className="flex flex-wrap">
                                 {dateValues.map((day) => (
                                     <div
                                         key={day + "_cb"}
@@ -104,7 +104,7 @@ export default function Search({
                                         ></input>
                                         <label
                                             htmlFor={day + "_cb"}
-                                            class="capitalize"
+                                            className="capitalize"
                                         >
                                             {day}
                                         </label>
@@ -114,7 +114,7 @@ export default function Search({
                         </div>
                         <div className="py-3">
                             <div className="font-bold text-lg mb-1">Times</div>
-                            <div className="flex">
+                            <div className="flex flex-wrap">
                                 {timeValues.map((time) => (
                                     <div
                                         key={time + "_cb"}
@@ -134,7 +134,7 @@ export default function Search({
                                         ></input>
                                         <label
                                             htmlFor={time + "_cb"}
-                                            class="capitalize"
+                                            className="capitalize"
                                         >
                                             {time}
                                         </label>
