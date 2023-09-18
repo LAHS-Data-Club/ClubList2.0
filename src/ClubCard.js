@@ -15,9 +15,11 @@ export default function ClubCard({
     }
 
     return (
-        <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body flex flex-col justify-between">
-            <div>
-                <p className="font-display text-xl font-bold">{name}</p>
+        <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between">
+            <div className="text-md lg:text-base">
+                <p className="font-display text-base lg:text-xl font-bold">
+                    {name}
+                </p>
                 <div className="my-2">
                     <div className="flex items-end gap-1">
                         <svg
