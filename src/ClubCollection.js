@@ -147,7 +147,12 @@ export default function ClubCollection() {
                         setTimeFilters={setTimeFilters}
                         dateFilters={dateFilters}
                         timeFilters={timeFilters}
-                        dateValues={getUniqueValues(allData, "date")}
+                        dateValues={[
+                            "Monday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday",
+                        ]}
                         timeValues={getUniqueValues(allData, "time")}
                     ></Search>
                     <div className="grid grid-cols-4 gap-4">

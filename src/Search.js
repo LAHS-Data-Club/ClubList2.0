@@ -16,17 +16,22 @@ export default function Search({
     };
 
     const handleCheckOnChange = (e, name, isDate) => {
+        name = name.lower();
         if (isDate) {
             if (e.target.checked) {
                 setDateFilters([...dateFilters, name]);
             } else {
-                setDateFilters(dateFilters.filter((date) => date !== name));
+                setDateFilters(
+                    dateFilters.filter((date) => date.lower() !== name)
+                );
             }
         } else {
             if (e.target.checked) {
                 setTimeFilters([...timeFilters, name]);
             } else {
-                setTimeFilters(timeFilters.filter((time) => time !== name));
+                setTimeFilters(
+                    timeFilters.filter((time) => time.lower() !== name)
+                );
             }
         }
     };
@@ -71,7 +76,7 @@ export default function Search({
                 // Popup filter
                 <div className="relative">
                     <div
-                        className="font-body absolute z-10 mt-2 w-full origin-top-right divide-y divide-white rounded-md bg-white/70 backdrop-blur drop-shadow-lg text-black focus:outline-none flex flex-col px-4"
+                        className="font-body mt-2 w-full divide-y divide-white rounded-md bg-white/70 backdrop-blur drop-shadow-lg text-black focus:outline-none flex flex-col px-4"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="menu-button"
@@ -97,7 +102,10 @@ export default function Search({
                                                 )
                                             }
                                         ></input>
-                                        <label htmlFor={day + "_cb"}>
+                                        <label
+                                            htmlFor={day + "_cb"}
+                                            class="capitalize"
+                                        >
                                             {day}
                                         </label>
                                     </div>
@@ -124,7 +132,10 @@ export default function Search({
                                                 )
                                             }
                                         ></input>
-                                        <label htmlFor={time + "_cb"}>
+                                        <label
+                                            htmlFor={time + "_cb"}
+                                            class="capitalize"
+                                        >
                                             {time}
                                         </label>
                                     </div>
