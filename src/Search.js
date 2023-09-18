@@ -71,19 +71,23 @@ export default function Search({
                 // Popup filter
                 <div className="relative">
                     <div
-                        className="font-body absolute z-10 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white/70 backdrop-blur drop-shadow-lg text-black focus:outline-none flex flex-col"
+                        className="font-body absolute z-10 mt-2 w-full origin-top-right divide-y divide-white rounded-md bg-white/70 backdrop-blur drop-shadow-lg text-black focus:outline-none flex flex-col px-4"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="menu-button"
-                        tabindex="-1"
+                        tabIndex="-1"
                     >
-                        <div>
-                            <div>Days</div>
+                        <div className="py-4">
+                            <div className="font-bold text-lg mb-1">Days</div>
                             <div className="flex">
                                 {dateValues.map((day) => (
-                                    <div>
+                                    <div
+                                        key={day + "_cb"}
+                                        className="me-3 flex items-center"
+                                    >
                                         <input
                                             id={day + "_cb"}
+                                            className="me-1"
                                             type="checkbox"
                                             onChange={(e) =>
                                                 handleCheckOnChange(
@@ -93,18 +97,24 @@ export default function Search({
                                                 )
                                             }
                                         ></input>
-                                        <label for={day + "_cb"}>{day}</label>
+                                        <label htmlFor={day + "_cb"}>
+                                            {day}
+                                        </label>
                                     </div>
                                 ))}
                             </div>
                         </div>
-                        <div>
-                            <div>Times</div>
+                        <div className="py-3">
+                            <div className="font-bold text-lg mb-1">Times</div>
                             <div className="flex">
                                 {timeValues.map((time) => (
-                                    <div>
+                                    <div
+                                        key={time + "_cb"}
+                                        className="me-3 flex items-center"
+                                    >
                                         <input
                                             id={time + "_cb"}
+                                            className="me-1"
                                             type="checkbox"
                                             onChange={(e) =>
                                                 handleCheckOnChange(
@@ -114,7 +124,9 @@ export default function Search({
                                                 )
                                             }
                                         ></input>
-                                        <label for={time + "_cb"}>{time}</label>
+                                        <label htmlFor={time + "_cb"}>
+                                            {time}
+                                        </label>
                                     </div>
                                 ))}
                             </div>
