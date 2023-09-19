@@ -1,4 +1,4 @@
-import { generateMailto } from "./utilities";
+import { generateMailto } from "../utilities";
 
 export default function ClubCard({
     id,

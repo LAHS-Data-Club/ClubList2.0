@@ -1,5 +1,4 @@
-import ClubCollection from "./ClubCollection";
-// import './App.css';
+import ClubCollection from "./components/ClubCollection";
 
 export default function App() {
     return (
