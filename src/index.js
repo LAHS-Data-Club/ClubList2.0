@@ -3,11 +3,27 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ClubPage from "./components/ClubPage";
+import ClubCollection from "./components/ClubCollection";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <App />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />}>
+                    <Route
+                        index
+                        element={<ClubCollection></ClubCollection>}
+                    ></Route>
+                    <Route
+                        path="clubs/:id"
+                        element={<ClubPage></ClubPage>}
+                    ></Route>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     </React.StrictMode>
 );
 

@@ -1,5 +1,9 @@
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
-import { fbClubsCollection } from "./firebase/firebaseRepository";
+import {
+    fbClubsCollection,
+    readClubsFromFirestore,
+} from "../firebase/firebaseRepository";
+import { getDocs, collection } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import ClubCard from "./ClubCard";
 import Fuse from "fuse.js";
@@ -17,7 +21,7 @@ function getUniqueValues(allData, property) {
 }
 
 export default function ClubCollection() {
-    const [value, loading, error] = useCollectionOnce(fbClubsCollection);
+    const [loading, setLoading] = useState(true);
     const [allData, setAllData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -38,21 +42,43 @@ export default function ClubCollection() {
         keys: ["name", "description", "date", "time"],
     };
 
-    const fuse = new Fuse(allData, options);
+    const fuse = new Fuse(allData == null ? [] : allData, options);
 
-    // Once clubs are loaded, set them to State
+    const RELOAD_LS_TIME = 1000 * 60 * 60 * 24; // reload local storage every x milliseconds (1 day)
+
+    // Call once on component mount: load allData from firebase or from local storage
     useEffect(() => {
-        if (value) {
-            let data = value.docs.map((doc) => getCleanedClubData(doc));
-            setAllData(data);
+        setLoading(true);
+
+        // Read values from local storage
+        let lastLoaded = Date.parse(localStorage.getItem("last_loaded"));
+        let clubs = JSON.parse(localStorage.getItem("clubs"));
+
+        // load clubs from firebase if specified time has passed / clubs is empty
+        if (
+            isNaN(lastLoaded) ||
+            new Date() - lastLoaded >= RELOAD_LS_TIME ||
+            clubs == null ||
+            clubs.length == 0
+        ) {
+            new Promise(readClubsFromFirestore).then((clubs) => {
+                setAllData(clubs);
+                setLoading(false);
+            });
+        } else {
+            setAllData(clubs);
+            setLoading(false);
+            console.log("Loaded clubs from local storage.");
         }
-    }, [value]);
+    }, []);
 
     // When allData is set, give collection to search and display
     useEffect(() => {
-        fuse.setCollection(allData);
-        setSearchResults(allData);
-        // console.log(searchResults);
+        if (allData != null) {
+            // localStorage.setItem("clubs", JSON.stringify(allData));
+            fuse.setCollection(allData);
+            setSearchResults(allData);
+        }
     }, [allData]);
 
     // When the search query changes, update the data
@@ -89,8 +115,6 @@ export default function ClubCollection() {
             return;
         }
 
-        console.log(query);
-
         let results = fuse.search(query);
         const items = results.map((result) => result.item);
 
@@ -113,11 +137,6 @@ export default function ClubCollection() {
                     A project by the Data Club.
                 </div>
             </div>
-            {error && (
-                <p>
-                    Oops, something went wrong loading the clubs from Firebase!
-                </p>
-            )}
             {loading && (
                 <div role="status">
                     <svg
@@ -139,7 +158,7 @@ export default function ClubCollection() {
                     <span className="sr-only">Loading...</span>
                 </div>
             )}
-            {value && (
+            {allData.length > 0 && (
                 <div className="flex-col flex">
                     <Search
                         onChange={handleSearch}
@@ -155,14 +174,13 @@ export default function ClubCollection() {
                         ]}
                         timeValues={getUniqueValues(allData, "time")}
                     ></Search>
-                    <div className="grid lg:grid-cols-4 gap-4">
+                    <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
                         {searchResults.map((club) => (
                             <ClubCard {...club} key={club.id}></ClubCard>
                         ))}
                     </div>
                 </div>
             )}
-            <div></div>
         </div>
     );
 }

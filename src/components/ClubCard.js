@@ -1,4 +1,5 @@
-import { generateMailto } from "./utilities";
+import { generateMailto } from "../utilities";
+import { Link } from "react-router-dom";
 
 export default function ClubCard({
     id,
@@ -9,19 +10,23 @@ export default function ClubCard({
     date,
     time,
     location,
+    url,
 }) {
     if (!isNaN(location)) {
         location = "Room " + location;
     }
 
     return (
-        <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between">
+        <Link
+            to={"clubs/" + url}
+            className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between"
+        >
             <div className="text-md lg:text-base">
                 <p className="font-display text-base lg:text-xl font-bold">
                     {name}
                 </p>
                 <div className="my-2">
-                    <div className="flex items-end gap-1">
+                    <div className="flex items-start gap-1">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -40,7 +45,7 @@ export default function ClubCard({
                             {date} {time}
                         </div>
                     </div>
-                    <div className="flex items-end gap-1">
+                    <div className="flex items-start gap-1">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -87,6 +92,6 @@ export default function ClubCard({
 
                 <div>Contact</div>
             </a>
-        </div>
+        </Link>
     );
 }
