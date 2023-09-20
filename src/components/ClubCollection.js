@@ -181,7 +181,6 @@ export default function ClubCollection() {
                     </div>
                 </div>
             )}
-            <div></div>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { readClubsFromFirestore } from "../firebase/firebaseRepository";
 import { generateMailto } from "../utilities";
 
@@ -42,12 +42,20 @@ export default function ClubPage({}) {
     }, [clubs]);
 
     return (
-        <div>
+        <div className="p-5">
+            <div className="w-100 mb-10 text-left">
+                <div className="text-3xl font-display font-bold">
+                    <Link to="/">LAHS Club List</Link>
+                </div>
+                <div className="italic font-md mt-1 ">
+                    A project by the Data Club.
+                </div>
+            </div>
             {loading && <div>Loading club data...</div>}
             {clubData && (
-                <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between">
-                    <div className="text-md lg:text-base">
-                        <p className="font-display text-base lg:text-xl font-bold">
+                <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body h-full">
+                    <div className="text-md lg:text-base h-full">
+                        <p className="font-display text-base lg:text-4xl font-bold p-4">
                             {clubData.name}
                         </p>
                         <div className="my-2">
