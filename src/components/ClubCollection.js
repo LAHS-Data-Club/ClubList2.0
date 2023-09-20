@@ -174,7 +174,7 @@ export default function ClubCollection() {
                         ]}
                         timeValues={getUniqueValues(allData, "time")}
                     ></Search>
-                    <div className="grid lg:grid-cols-4 gap-4">
+                    <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
                         {searchResults.map((club) => (
                             <ClubCard {...club} key={club.id}></ClubCard>
                         ))}
