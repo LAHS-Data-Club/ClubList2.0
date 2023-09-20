@@ -73,6 +73,9 @@ export default function ClubCard({
             </div>
             <a
                 href={generateMailto(contact, name)}
+                onClick={(e) => {
+                    e.stopPropagation();
+                }}
                 className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
             >
                 <svg
