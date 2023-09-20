@@ -1,5 +1,8 @@
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
-import { fbClubsCollection } from "../firebase/firebaseRepository";
+import {
+    fbClubsCollection,
+    readClubsFromFirestore,
+} from "../firebase/firebaseRepository";
 import { getDocs, collection } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import ClubCard from "./ClubCard";
@@ -19,7 +22,6 @@ function getUniqueValues(allData, property) {
 
 export default function ClubCollection() {
     const [loading, setLoading] = useState(true);
-    // const [value, loading, error] = useCollectionOnce(fbClubsCollection);
     const [allData, setAllData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -59,19 +61,8 @@ export default function ClubCollection() {
             clubs == null ||
             clubs.length == 0
         ) {
-            let promise = new Promise(async (resolve) => {
-                let snapshot = await getDocs(fbClubsCollection);
-                let data = [];
-                snapshot.forEach((doc) => {
-                    data.push(getCleanedClubData(doc));
-                });
-                console.log("Loaded clubs from firebase.");
-                setAllData(data);
-                localStorage.setItem("last_loaded", new Date());
-                localStorage.setItem("clubs", JSON.stringify(data));
-                resolve();
-            });
-            promise.then(() => {
+            new Promise(readClubsFromFirestore).then((clubs) => {
+                setAllData(clubs);
                 setLoading(false);
             });
         } else {
