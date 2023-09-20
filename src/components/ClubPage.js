@@ -3,6 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import { readClubsFromFirestore } from "../firebase/firebaseRepository";
 import { generateMailto } from "../utilities";
 
+function parseLocation(loc) {
+    if (!isNaN(loc)) {
+        return "Room " + loc;
+    } else {
+        return loc;
+    }
+}
+
 export default function ClubPage({}) {
     let { id } = useParams();
 
@@ -38,47 +46,83 @@ export default function ClubPage({}) {
     }, []);
 
     useEffect(() => {
-        setClubData(clubs.find((club) => club.id == id));
+        setClubData(clubs.find((club) => club.url == id));
     }, [clubs]);
 
     return (
-        <div className="p-5">
-            <div className="w-100 mb-10 text-left">
-                <div className="text-3xl font-display font-bold">
+        <div className="">
+            <div className="w-100 mb-3 text-center bg-white/40 drop-shadow-xl backdrop-blur p-3">
+                <div className="text-xl font-display font-bold me-1">
                     <Link to="/">LAHS Club List</Link>
                 </div>
-                <div className="italic font-md mt-1 ">
+                <div className="italic text-md">
                     A project by the Data Club.
                 </div>
             </div>
             {loading && <div>Loading club data...</div>}
             {clubData && (
-                <div className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body h-full">
-                    <div className="text-md lg:text-base h-full">
-                        <p className="font-display text-base lg:text-4xl font-bold p-4">
-                            {clubData.name}
-                        </p>
-                        <div className="my-2">
-                            <div className="flex items-end gap-1">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-6 h-6"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
-                                    />
-                                </svg>
-                                <div className="align-baseline">
-                                    {clubData.date} {clubData.time}
+                <div className="w-full flex flex-col md:items-center h-full">
+                    <div className="p-5 font-body h-full max-w-4xl min-w-sm">
+                        <div className="text-lg h-full ">
+                            <p className="font-display text-3xl md:text-4xl font-bold py-2 md:py-4">
+                                {clubData.name}
+                            </p>
+                            <div className="my-2">
+                                <div className="flex items-start gap-1">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="w-6 h-6"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+                                        />
+                                    </svg>
+                                    <div className="align-baseline">
+                                        {clubData.date} {clubData.time}
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-1">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="w-6 h-6"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                                        />
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                                        />
+                                    </svg>
+
+                                    <div>
+                                        {parseLocation(clubData.location)}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="flex items-end gap-1">
+                            <div>{clubData.description}</div>
+                        </div>
+                        <div className="flex gap-2">
+                            <a
+                                href={generateMailto(
+                                    clubData.contact,
+                                    clubData.name
+                                )}
+                                className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -90,41 +134,35 @@ export default function ClubPage({}) {
                                     <path
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
-                                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
                                     />
                                 </svg>
 
-                                <div>{clubData.location}</div>
-                            </div>
-                        </div>
-                        <div>{clubData.description}</div>
-                    </div>
-                    <a
-                        href={generateMailto(clubData.contact, clubData.name)}
-                        className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                            />
-                        </svg>
+                                <div>Contact</div>
+                            </a>
+                            <Link
+                                to="/"
+                                className="flex items-center gap-1 max-h-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                                    />
+                                </svg>
 
-                        <div>Contact</div>
-                    </a>
+                                <div>Back to Club List</div>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
