@@ -67,6 +67,18 @@ export default function ClubPage({}) {
                             <p className="font-display text-3xl md:text-4xl font-bold py-2 md:py-4">
                                 {clubData.name}
                             </p>
+                            {clubData.tags && (
+                                <div className="flex flex-wrap gap-2 text-md mb-5">
+                                    {clubData.tags.split(", ").map((tag) => (
+                                        <div
+                                            key={tag}
+                                            className="bg-white/50 rounded-full drop-shadow-md py-2 px-4"
+                                        >
+                                            {tag}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                             <div className="my-2">
                                 <div className="flex items-start gap-1">
                                     <svg

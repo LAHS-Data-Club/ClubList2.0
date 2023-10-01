@@ -12,9 +12,15 @@ export default function ClubCard({
     location,
     url,
     sign_up,
+    tags,
 }) {
     if (!isNaN(location)) {
         location = "Room " + location;
+    }
+
+    if (tags) {
+        tags = tags.split(", ");
+        console.log(tags);
     }
 
     return (
@@ -26,6 +32,18 @@ export default function ClubCard({
                 <p className="font-display text-base lg:text-xl font-bold">
                     {name}
                 </p>
+                {tags && (
+                    <div className="flex flex-wrap gap-2 text-xs mt-2 mb-5 font-bold">
+                        {tags.map((tag) => (
+                            <div
+                                key={tag}
+                                className="bg-white/50 rounded-full drop-shadow-md py-2 px-3"
+                            >
+                                {tag}
+                            </div>
+                        ))}
+                    </div>
+                )}
                 <div className="my-2">
                     <div className="flex items-start gap-1">
                         <svg
@@ -70,6 +88,7 @@ export default function ClubCard({
                         <div>{location}</div>
                     </div>
                 </div>
+
                 <div>{description}</div>
             </div>
             <div className="flex flex-row gap-3">
