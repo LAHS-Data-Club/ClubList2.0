@@ -27,11 +27,13 @@ export default function ClubCollection() {
     const [searchResults, setSearchResults] = useState([]);
     const [dateFilters, setDateFilters] = useState([]);
     const [timeFilters, setTimeFilters] = useState([]);
+    const [tagFilters, setTagFilters] = useState([]);
     const [searchFields, setSearchFields] = useState([
         "name",
         "description",
         "date",
         "time",
+        "tags",
     ]);
 
     const options = {
@@ -39,7 +41,7 @@ export default function ClubCollection() {
         includeMatches: true,
         threshold: 0.2,
         ignoreLocation: true,
-        keys: ["name", "description", "date", "time"],
+        keys: searchFields,
     };
 
     const fuse = new Fuse(allData == null ? [] : allData, options);
@@ -110,6 +112,13 @@ export default function ClubCollection() {
             });
         }
 
+        // tag filters
+        if (tagFilters.length > 0) {
+            query.$and.push({
+                $or: tagFilters.map((filter) => ({ tags: filter })),
+            });
+        }
+
         if (query.$and.length === 0) {
             setSearchResults(allData);
             return;
@@ -119,7 +128,7 @@ export default function ClubCollection() {
         const items = results.map((result) => result.item);
 
         setSearchResults(items);
-    }, [searchQuery, searchFields, dateFilters, timeFilters]);
+    }, [searchQuery, searchFields, dateFilters, timeFilters, tagFilters]);
 
     const handleSearch = (event) => {
         const { value } = event.target;
@@ -164,8 +173,10 @@ export default function ClubCollection() {
                         onChange={handleSearch}
                         setDateFilters={setDateFilters}
                         setTimeFilters={setTimeFilters}
+                        setTagFilters={setTagFilters}
                         dateFilters={dateFilters}
                         timeFilters={timeFilters}
+                        tagFilters={tagFilters}
                         dateValues={[
                             "Monday",
                             "Wednesday",
@@ -173,6 +184,29 @@ export default function ClubCollection() {
                             "Friday",
                         ]}
                         timeValues={getUniqueValues(allData, "time")}
+                        tagValues={[
+                            "Helping Others",
+                            "Awareness",
+                            "Outreach",
+                            "Teamwork",
+                            "Community",
+                            "Health/Disabilities",
+                            "STEM",
+                            "Diversity",
+                            "Education",
+                            "Competition",
+                            "Design",
+                            "Art",
+                            "Creative",
+                            "Leisure",
+                            "Music",
+                            "Cultural",
+                            "Public Speaking",
+                            "Leadership",
+                            "Food",
+                            "Computer Science",
+                            "Sports",
+                        ]}
                     ></Search>
                     <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
                         {searchResults.map((club) => (

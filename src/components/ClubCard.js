@@ -20,7 +20,6 @@ export default function ClubCard({
 
     if (tags) {
         tags = tags.split(", ");
-        console.log(tags);
     }
 
     return (

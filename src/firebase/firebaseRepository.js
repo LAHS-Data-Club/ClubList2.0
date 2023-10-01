@@ -11,7 +11,7 @@ export async function readClubsFromFirestore(resolve) {
 
     querySnapshot.forEach((doc) => {
         let clubData = { ...doc.data(), id: doc.id };
-        console.log(clubData);
+        // console.log(clubData);
 
         clubs.push(clubData);
     });
