@@ -44,7 +44,7 @@ export default function ClubCollection() {
 
     const fuse = new Fuse(allData == null ? [] : allData, options);
 
-    const RELOAD_LS_TIME = 1000 * 60 * 60 * 24; // reload local storage every x milliseconds (1 day)
+    const RELOAD_LS_TIME = 1000 * 60 * 60 * 1; // reload local storage every x milliseconds (1 hour)
 
     // Call once on component mount: load allData from firebase or from local storage
     useEffect(() => {
@@ -59,7 +59,7 @@ export default function ClubCollection() {
             isNaN(lastLoaded) ||
             new Date() - lastLoaded >= RELOAD_LS_TIME ||
             clubs == null ||
-            clubs.length == 0
+            clubs.length === 0
         ) {
             new Promise(readClubsFromFirestore).then((clubs) => {
                 setAllData(clubs);
