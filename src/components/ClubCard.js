@@ -33,7 +33,7 @@ export default function ClubCard({
                     {name}
                 </p>
                 {tags && (
-                    <div className="flex flex-wrap gap-2 text-xs mt-2 mb-5 font-bold">
+                    <div className="flex flex-wrap gap-2 text-xs mt-2 mb-3">
                         {tags.map((tag) => (
                             <div
                                 key={tag}
