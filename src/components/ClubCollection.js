@@ -199,11 +199,7 @@ export default function ClubCollection() {
                     ></Search>
                     <div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
                         {searchResults.map((club) => (
-                            <ClubCard
-                                {...club}
-                                sign_up={club["sign-up"]} // TODO: remove once unnecessary
-                                key={club.id}
-                            ></ClubCard>
+                            <ClubCard {...club} key={club.id}></ClubCard>
                         ))}
                     </div>
                 </div>

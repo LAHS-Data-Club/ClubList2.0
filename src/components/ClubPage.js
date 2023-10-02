@@ -128,9 +128,9 @@ export default function ClubPage({}) {
                             <div>{clubData.description}</div>
                         </div>
                         <div className="flex gap-3">
-                            {clubData["sign-up"] && (
+                            {clubData.sign_up && (
                                 <a
-                                    href={clubData["sign-up"]}
+                                    href={clubData.sign_up}
                                     onClick={(e) => {
                                         e.stopPropagation();
                                     }}
