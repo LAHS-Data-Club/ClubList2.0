@@ -4,35 +4,65 @@ export default function Search({
     onChange,
     setDateFilters,
     setTimeFilters,
+    setTagFilters,
     dateFilters,
     timeFilters,
+    tagFilters,
     dateValues,
     timeValues,
+    tagValues,
 }) {
     const [open, setOpen] = useState(true); // for testing: TODO: turn back to false
+
+    const FILTER = {
+        DATE: 0,
+        TIME: 1,
+        TAG: 2,
+    };
 
     const handleOpen = () => {
         setOpen(!open);
     };
 
-    const handleCheckOnChange = (e, name, isDate) => {
+    const handleCheckOnChange = (e, name, filterType) => {
         name = name.toLowerCase();
-        if (isDate) {
-            if (e.target.checked) {
-                setDateFilters([...dateFilters, name]);
-            } else {
-                setDateFilters(
-                    dateFilters.filter((date) => date.toLowerCase() !== name)
-                );
-            }
-        } else {
-            if (e.target.checked) {
-                setTimeFilters([...timeFilters, name]);
-            } else {
-                setTimeFilters(
-                    timeFilters.filter((time) => time.toLowerCase() !== name)
-                );
-            }
+        switch (filterType) {
+            case FILTER.DATE:
+                if (e.target.checked) {
+                    setDateFilters([...dateFilters, name]);
+                } else {
+                    setDateFilters(
+                        dateFilters.filter(
+                            (date) => date.toLowerCase() !== name
+                        )
+                    );
+                }
+                break;
+
+            case FILTER.TIME:
+                if (e.target.checked) {
+                    setTimeFilters([...timeFilters, name]);
+                } else {
+                    setTimeFilters(
+                        timeFilters.filter(
+                            (time) => time.toLowerCase() !== name
+                        )
+                    );
+                }
+                break;
+
+            case FILTER.TAG:
+                if (e.target.checked) {
+                    setTagFilters([...tagFilters, name]);
+                } else {
+                    setTagFilters(
+                        tagFilters.filter((tag) => tag.toLowerCase() !== name)
+                    );
+                }
+                break;
+
+            default:
+                break;
         }
     };
 
@@ -82,6 +112,7 @@ export default function Search({
                         aria-labelledby="menu-button"
                         tabIndex="-1"
                     >
+                        {/* Date filter */}
                         <div className="py-4">
                             <div className="font-bold text-lg mb-1">Days</div>
                             <div className="flex flex-wrap">
@@ -91,19 +122,19 @@ export default function Search({
                                         className="me-3 flex items-center"
                                     >
                                         <input
-                                            id={day + "_cb"}
+                                            id={day + "_datecb"}
                                             className="me-1"
                                             type="checkbox"
                                             onChange={(e) =>
                                                 handleCheckOnChange(
                                                     e,
                                                     day,
-                                                    true
+                                                    FILTER.DATE
                                                 )
                                             }
                                         ></input>
                                         <label
-                                            htmlFor={day + "_cb"}
+                                            htmlFor={day + "_datecb"}
                                             className="capitalize"
                                         >
                                             {day}
@@ -112,6 +143,7 @@ export default function Search({
                                 ))}
                             </div>
                         </div>
+                        {/* Time filter */}
                         <div className="py-3">
                             <div className="font-bold text-lg mb-1">Times</div>
                             <div className="flex flex-wrap">
@@ -121,24 +153,56 @@ export default function Search({
                                         className="me-3 flex items-center"
                                     >
                                         <input
-                                            id={time + "_cb"}
+                                            id={time + "_timecb"}
                                             className="me-1"
                                             type="checkbox"
                                             onChange={(e) =>
                                                 handleCheckOnChange(
                                                     e,
                                                     time,
-                                                    false
+                                                    FILTER.TIME
                                                 )
                                             }
                                         ></input>
                                         <label
-                                            htmlFor={time + "_cb"}
+                                            htmlFor={time + "_timecb"}
                                             className="capitalize"
                                         >
                                             {time}
                                         </label>
                                     </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* Tags filter */}
+                        <div className="py-3">
+                            <div className="font-bold text-lg mb-1">Tags</div>
+                            <div className="flex flex-wrap gap-3">
+                                {tagValues.map((tag) => (
+                                    <label
+                                        key={tag + "_cb"}
+                                        className="flex items-center px-3 py-2 rounded-full bg-white/50 drop-shadow-md hover:bg-white/80 hover:drop-shadow-lg"
+                                        htmlFor={tag + "_tagcb"}
+                                    >
+                                        <input
+                                            id={tag + "_tagcb"}
+                                            className="me-1"
+                                            type="checkbox"
+                                            onChange={(e) =>
+                                                handleCheckOnChange(
+                                                    e,
+                                                    tag,
+                                                    FILTER.TAG
+                                                )
+                                            }
+                                        ></input>
+                                        <div
+                                            // htmlFor={tag + "_tagcb"}
+                                            className="capitalize"
+                                        >
+                                            {tag}
+                                        </div>
+                                    </label>
                                 ))}
                             </div>
                         </div>

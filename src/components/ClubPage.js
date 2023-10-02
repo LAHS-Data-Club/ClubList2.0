@@ -67,6 +67,18 @@ export default function ClubPage({}) {
                             <p className="font-display text-3xl md:text-4xl font-bold py-2 md:py-4">
                                 {clubData.name}
                             </p>
+                            {clubData.tags && (
+                                <div className="flex flex-wrap gap-2 text-md mb-5">
+                                    {clubData.tags.split(", ").map((tag) => (
+                                        <div
+                                            key={tag}
+                                            className="bg-white/50 rounded-full drop-shadow-md py-2 px-4"
+                                        >
+                                            {tag}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                             <div className="my-2">
                                 <div className="flex items-start gap-1">
                                     <svg
@@ -115,7 +127,33 @@ export default function ClubPage({}) {
                             </div>
                             <div>{clubData.description}</div>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-3">
+                            {clubData["sign-up"] && (
+                                <a
+                                    href={clubData["sign-up"]}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                    }}
+                                    className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth={1.5}
+                                        stroke="currentColor"
+                                        className="w-6 h-6"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                                        />
+                                    </svg>
+
+                                    <div className="min-w-max">Join!</div>
+                                </a>
+                            )}
                             <a
                                 href={generateMailto(
                                     clubData.contact,
