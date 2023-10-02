@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import ClubCollection from "./components/ClubCollection";
 
 export default function App() {
     return (

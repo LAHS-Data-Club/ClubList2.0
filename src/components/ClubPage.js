@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { readClubsFromFirestore } from "../firebase/firebaseRepository";
+import { readClubs } from "../firebase/firebaseRepository";
 import { generateMailto } from "../utilities";
 
 function parseLocation(loc) {
@@ -34,7 +34,7 @@ export default function ClubPage({}) {
             clubs == null ||
             clubs.length == 0
         ) {
-            new Promise(readClubsFromFirestore).then((clubs) => {
+            new Promise(readClubs).then((clubs) => {
                 setClubs(clubs);
                 setLoading(false);
             });

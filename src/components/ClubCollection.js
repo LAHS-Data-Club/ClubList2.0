@@ -1,19 +1,8 @@
-import { useCollectionOnce } from "react-firebase-hooks/firestore";
-import {
-    fbClubsCollection,
-    readClubsFromFirestore,
-} from "../firebase/firebaseRepository";
-import { getDocs, collection } from "firebase/firestore";
+import { readClubs } from "../firebase/firebaseRepository";
 import { useState, useEffect } from "react";
 import ClubCard from "./ClubCard";
 import Fuse from "fuse.js";
 import Search from "./Search";
-
-function getCleanedClubData(doc) {
-    let clubData = { ...doc.data(), id: doc.id };
-    // console.log(clubData);
-    return clubData;
-}
 
 // returns a list of unique values of that property
 function getUniqueValues(allData, property) {
@@ -63,7 +52,7 @@ export default function ClubCollection() {
             clubs == null ||
             clubs.length === 0
         ) {
-            new Promise(readClubsFromFirestore).then((clubs) => {
+            new Promise(readClubs).then((clubs) => {
                 setAllData(clubs);
                 setLoading(false);
             });
