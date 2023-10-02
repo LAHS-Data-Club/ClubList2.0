@@ -177,11 +177,12 @@ export default function Search({
                         {/* Tags filter */}
                         <div className="py-3">
                             <div className="font-bold text-lg mb-1">Tags</div>
-                            <div className="flex flex-wrap">
+                            <div className="flex flex-wrap gap-3">
                                 {tagValues.map((tag) => (
-                                    <div
+                                    <label
                                         key={tag + "_cb"}
-                                        className="me-3 flex items-center"
+                                        className="flex items-center px-3 py-2 rounded-full bg-white/50 drop-shadow-md hover:bg-white/80 hover:drop-shadow-lg"
+                                        htmlFor={tag + "_tagcb"}
                                     >
                                         <input
                                             id={tag + "_tagcb"}
@@ -195,13 +196,13 @@ export default function Search({
                                                 )
                                             }
                                         ></input>
-                                        <label
-                                            htmlFor={tag + "_tagcb"}
+                                        <div
+                                            // htmlFor={tag + "_tagcb"}
                                             className="capitalize"
                                         >
                                             {tag}
-                                        </label>
-                                    </div>
+                                        </div>
+                                    </label>
                                 ))}
                             </div>
                         </div>
