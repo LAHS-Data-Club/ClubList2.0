@@ -56,7 +56,7 @@ export default function ClubPage({}) {
                     <Link to="/">LAHS Club List</Link>
                 </div>
                 <div className="italic text-md">
-                    A project by the Data Club.
+                    A project by the Data Club, not yet updated - check back soon.
                 </div>
             </div>
             {loading && <div>Loading club data...</div>}
