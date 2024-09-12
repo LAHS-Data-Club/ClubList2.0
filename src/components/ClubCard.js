@@ -1,13 +1,11 @@
-import { generateMailto } from "../utilities";
-import { Link } from "react-router-dom";
+import { generateMailto } from '../utilities';
+import { Link } from 'react-router-dom';
 
 export default function ClubCard({
-    id,
     name,
     description,
-    advisor,
-    contact,
-    date,
+    advisor_email,
+    president_email,
     time,
     location,
     url,
@@ -15,17 +13,20 @@ export default function ClubCard({
     tags,
 }) {
     if (!isNaN(location)) {
-        location = "Room " + location;
+        location = 'Room ' + location;
     }
 
     if (tags) {
-        tags = tags.split(", ");
+        tags = tags.split(', ');
     }
 
     return (
         <Link
-            to={"clubs/" + url}
-            className="p-5 backdrop-blur bg-white/40 rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between"
+            to={'clubs/' + url}
+            className={
+                (name === 'Data Club' ? ' ' : 'bg-white/40 ') +
+                'p-5 backdrop-blur rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between'
+            }
         >
             <div className="text-md lg:text-base">
                 <p className="font-display text-base lg:text-xl font-bold">
@@ -59,9 +60,7 @@ export default function ClubCard({
                                 d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
                             />
                         </svg>
-                        <div className="align-baseline">
-                            {date} {time}
-                        </div>
+                        <div className="align-baseline">{time}</div>
                     </div>
                     <div className="flex items-start gap-1">
                         <svg
@@ -118,7 +117,7 @@ export default function ClubCard({
                     </a>
                 )}
                 <a
-                    href={generateMailto(contact, name)}
+                    href={generateMailto(advisor_email, name)}
                     onClick={(e) => {
                         e.stopPropagation();
                     }}
@@ -139,7 +138,31 @@ export default function ClubCard({
                         />
                     </svg>
 
-                    <div>Contact</div>
+                    <div>Contact Advisor</div>
+                </a>
+                <a
+                    href={generateMailto(president_email, name)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                    className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                        />
+                    </svg>
+
+                    <div>Contact President</div>
                 </a>
             </div>
         </Link>

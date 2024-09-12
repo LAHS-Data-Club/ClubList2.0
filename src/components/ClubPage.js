@@ -1,15 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { readClubs } from "../firebase/firebaseRepository";
-import { generateMailto } from "../utilities";
-
-function parseLocation(loc) {
-    if (!isNaN(loc)) {
-        return "Room " + loc;
-    } else {
-        return loc;
-    }
-}
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { readClubs } from '../firebase/firebaseRepository';
+import { generateMailto, parseLocation } from '../utilities';
 
 export default function ClubPage({}) {
     let { id } = useParams();
@@ -24,15 +16,15 @@ export default function ClubPage({}) {
         setLoading(true);
 
         // Read values from local storage
-        let lastLoaded = Date.parse(localStorage.getItem("last_loaded"));
-        let clubs = JSON.parse(localStorage.getItem("clubs"));
+        let lastLoaded = Date.parse(localStorage.getItem('last_loaded'));
+        let clubs = JSON.parse(localStorage.getItem('clubs'));
 
         // load clubs from firebase if specified time has passed / clubs is empty
         if (
             isNaN(lastLoaded) ||
             new Date() - lastLoaded >= RELOAD_LS_TIME ||
             clubs == null ||
-            clubs.length == 0
+            clubs.length === 0
         ) {
             new Promise(readClubs).then((clubs) => {
                 setClubs(clubs);
@@ -41,12 +33,12 @@ export default function ClubPage({}) {
         } else {
             setClubs(clubs);
             setLoading(false);
-            console.log("Loaded clubs from local storage.");
+            console.log('Loaded clubs from local storage.');
         }
     }, []);
 
     useEffect(() => {
-        setClubData(clubs.find((club) => club.url == id));
+        setClubData(clubs.find((club) => club.url === id));
     }, [clubs]);
 
     return (
@@ -55,9 +47,7 @@ export default function ClubPage({}) {
                 <div className="text-xl font-display font-bold me-1">
                     <Link to="/">LAHS Club List</Link>
                 </div>
-                <div className="italic text-md">
-                    A project by the Data Club, not yet updated - check back soon.
-                </div>
+                <div className="italic text-md">A project by the Data Club</div>
             </div>
             {loading && <div>Loading club data...</div>}
             {clubData && (
@@ -69,7 +59,7 @@ export default function ClubPage({}) {
                             </p>
                             {clubData.tags && (
                                 <div className="flex flex-wrap gap-2 text-md mb-5">
-                                    {clubData.tags.split(", ").map((tag) => (
+                                    {clubData.tags.split(', ').map((tag) => (
                                         <div
                                             key={tag}
                                             className="bg-white/50 rounded-full drop-shadow-md py-2 px-4"
@@ -96,7 +86,7 @@ export default function ClubPage({}) {
                                         />
                                     </svg>
                                     <div className="align-baseline">
-                                        {clubData.date} {clubData.time}
+                                        {clubData.time}
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-1">
@@ -156,9 +146,12 @@ export default function ClubPage({}) {
                             )}
                             <a
                                 href={generateMailto(
-                                    clubData.contact,
-                                    clubData.name
+                                    clubData.advisor_email,
+                                    clubData.name,
                                 )}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                }}
                                 className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
                             >
                                 <svg
@@ -176,7 +169,34 @@ export default function ClubPage({}) {
                                     />
                                 </svg>
 
-                                <div>Contact</div>
+                                <div>Contact Advisor</div>
+                            </a>
+                            <a
+                                href={generateMailto(
+                                    clubData.president_email,
+                                    clubData.name,
+                                )}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                }}
+                                className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                                    />
+                                </svg>
+
+                                <div>Contact President</div>
                             </a>
                             <Link
                                 to="/"
