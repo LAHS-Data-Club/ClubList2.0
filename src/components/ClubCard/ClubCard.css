@@ -6,13 +6,13 @@
 	left: -2px;
 	top: -2px;
 	background: linear-gradient(
-		45deg,
+		40deg,
 		orange,
-		purple,
+		yellow,
 		orange,
-		purple,
+		yellow,
 		orange,
-		purple
+		yellow
 	);
 	background-size: 400%;
 	width: calc(100% + 5px);
@@ -20,13 +20,31 @@
 	z-index: -1;
 	transition: opacity 0.5s ease;
 	opacity: 0;
+	filter: blur(40px);
 }
 
 .glow:hover::before,
 .glow:hover::after {
 	opacity: 0.99;
-	filter: blur(20px);
 	animation: animateGlow 20s linear infinite;
+}
+
+.card::before,
+.card::after {
+	content: '';
+	position: absolute;
+	border-radius: 10px;
+	left: -2px;
+	top: -2px;
+	width: calc(100% + 5px);
+	height: calc(100% + 5px);
+	transition: opacity 0.5s ease;
+}
+
+.card:hover::before,
+.card:hover::after {
+	box-shadow: 0 0 15px 2px rgb(0 0 0 / 20%);
+	transition: box-shadow 0.2s ease;
 }
 
 @keyframes animateGlow {

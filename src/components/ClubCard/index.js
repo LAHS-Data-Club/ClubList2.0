@@ -26,7 +26,7 @@ export default function ClubCard({
 			to={'clubs/' + url}
 			className={
 				'bg-white/40' +
-				(name === 'Data Club' ? ' bg-white/40 glow ' : ' ') +
+				(name === 'Data Club' ? ' glow ' : ' card ') +
 				'p-5 backdrop-blur rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between'
 			}
 		>
