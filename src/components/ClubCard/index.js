@@ -27,7 +27,7 @@ export default function ClubCard({
 			className={
 				'bg-white/40' +
 				(name === 'Data Club' ? ' glow ' : ' card ') +
-				'p-5 backdrop-blur rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between'
+				'p-5 rounded-[1rem] drop-shadow-xl font-body lg:flex lg:flex-col justify-between'
 			}
 		>
 			<div className="text-md lg:text-base">
