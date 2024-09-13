@@ -25,6 +25,7 @@
 .glow:hover::before,
 .glow:hover::after {
 	opacity: 0.99;
+	filter: blur(20px);
 	animation: animateGlow 20s linear infinite;
 }
 
