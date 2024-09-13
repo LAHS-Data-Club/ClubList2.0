@@ -133,9 +133,7 @@ export default function ClubPage({}) {
 											/>
 										</svg>
 										<div>
-											<span className="font-bold">
-												President:{' '}
-											</span>
+											<span>President: </span>
 											{clubData.president}
 										</div>
 									</div>
@@ -155,9 +153,7 @@ export default function ClubPage({}) {
 											/>
 										</svg>
 										<div>
-											<span className="font-bold">
-												Advisor:{' '}
-											</span>
+											<span>Advisor: </span>
 											{clubData.advisor}
 										</div>
 									</div>
