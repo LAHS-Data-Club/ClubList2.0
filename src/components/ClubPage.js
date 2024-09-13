@@ -86,7 +86,7 @@ export default function ClubPage({}) {
                                         />
                                     </svg>
                                     <div className="align-baseline">
-                                        {clubData.time}
+                                        {clubData.day} {clubData.time}
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-1">

@@ -5,18 +5,19 @@ import { sanitize } from '../utilities.js';
 // export const fbClubsCollection = collection(db, "clubs-2024");
 
 export async function readClubs(resolve) {
-    let clubs = [];
+	let clubs = [];
 
-    // firebase code
-    // clubs = await readClubsFromFirestore();
+	// firebase code
+	// clubs = await readClubsFromFirestore();
 
-    // cache code
-    clubs = await readClubsFromCache();
+	// cache code
+	clubs = await readClubsFromCache();
+	clubs = replaceEmptyTime(clubs);
 
-    localStorage.setItem('last_loaded', new Date());
-    localStorage.setItem('clubs', JSON.stringify(clubs));
+	localStorage.setItem('last_loaded', new Date());
+	localStorage.setItem('clubs', JSON.stringify(clubs));
 
-    resolve(clubs);
+	resolve(clubs);
 }
 
 // async function readClubsFromFirestore() {
@@ -35,32 +36,38 @@ export async function readClubs(resolve) {
 // }
 
 async function readClubsFromCache() {
-    const clubs = [];
+	const clubs = [];
 
-    let request = await fetch(
-        'https://cachedclublist.lahsdataclub.com/clubs.json',
-    );
-    let clubsJSON = await request.json();
+	let request = await fetch(
+		'https://cachedclublist.lahsdataclub.com/clubs.json',
+	);
+	let clubsJSON = await request.json();
 
-    for (let id = 0; id < clubsJSON.length; id++) {
-        let club = { ...clubsJSON[id].fields };
+	for (let id = 0; id < clubsJSON.length; id++) {
+		let club = { ...clubsJSON[id].fields };
 
-        for (let key in club) {
-            club[key] = club[key].stringValue;
-        }
+		for (let key in club) {
+			club[key] = club[key].stringValue;
+		}
 
-        club = { ...club, id: id };
+		club = { ...club, id: id };
 
-        clubs.push(club);
-    }
+		clubs.push(club);
+	}
 
-    let dataClubIndex = clubs.findIndex((club) => club.name === 'Data Club');
-    if (dataClubIndex !== -1) {
-        let dataClub = clubs.splice(dataClubIndex, 1);
-        clubs.unshift(dataClub[0]);
-    }
+	let dataClubIndex = clubs.findIndex((club) => club.name === 'Data Club');
+	if (dataClubIndex !== -1) {
+		let dataClub = clubs.splice(dataClubIndex, 1);
+		clubs.unshift(dataClub[0]);
+	}
 
-    console.log('Loaded clubs from server cache.');
+	console.log('Loaded clubs from server cache.');
 
-    return clubs;
+	return clubs;
 }
+
+const replaceEmptyTime = (clubs) => {
+	return clubs.map((club) =>
+		club.time === '' ? { ...club, time: 'No Time Specified' } : club,
+	);
+};
