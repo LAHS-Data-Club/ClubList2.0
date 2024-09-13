@@ -98,7 +98,7 @@ export default function ClubCard({
 						onClick={(e) => {
 							e.stopPropagation();
 						}}
-						className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+						className="flex items-end gap-1 p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +123,7 @@ export default function ClubCard({
 					onClick={(e) => {
 						e.stopPropagation();
 					}}
-					className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+					className="flex items-end gap-1 p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@ export default function ClubCard({
 					onClick={(e) => {
 						e.stopPropagation();
 					}}
-					className="flex items-end gap-1 max-w-min p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
+					className="flex items-end gap-1 p-2 rounded-md mt-3 bg-white/50 drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
