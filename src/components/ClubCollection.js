@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import ClubCard from './ClubCard';
 import Fuse from 'fuse.js';
 import Search from './Search';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 // returns a list of unique values of that property
 function getUniqueValues(allData, property) {
@@ -26,6 +27,7 @@ export default function ClubCollection() {
 		'time',
 		'tags',
 	]);
+	const [displayedResults, setDisplayedResults] = useState([]);
 
 	const options = {
 		includeScore: true,
@@ -56,10 +58,12 @@ export default function ClubCollection() {
 		) {
 			new Promise(readClubs).then((clubs) => {
 				setAllData(clubs);
+				setDisplayedResults(clubs.slice(0, 10));
 				setLoading(false);
 			});
 		} else {
 			setAllData(clubs);
+			setDisplayedResults(clubs.slice(0, 10));
 			setLoading(false);
 			console.log('Loaded clubs from local storage.');
 		}
@@ -199,11 +203,26 @@ export default function ClubCollection() {
 							'Sports',
 						]}
 					></Search>
-					<div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-						{searchResults.map((club) => (
-							<ClubCard {...club} key={club.id}></ClubCard>
-						))}
-					</div>
+					<InfiniteScroll
+						dataLength={displayedResults.length}
+						next={() => {
+							setDisplayedResults(
+								displayedResults.concat(
+									searchResults.slice(
+										displayedResults.length,
+										displayedResults.length + 10,
+									),
+								),
+							);
+						}}
+						hasMore={displayedResults.length < searchResults.length}
+					>
+						<div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+							{displayedResults.map((club) => (
+								<ClubCard {...club} key={club.id}></ClubCard>
+							))}
+						</div>
+					</InfiniteScroll>
 				</div>
 			)}
 		</div>
