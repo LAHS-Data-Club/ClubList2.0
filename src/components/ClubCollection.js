@@ -217,7 +217,7 @@ export default function ClubCollection() {
 						}}
 						hasMore={displayedResults.length < searchResults.length}
 					>
-						<div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+						<div className="grid lg:grid-cols-3 2xl:grid-cols-4 gap-4 overflow-hidden p-5">
 							{displayedResults.map((club) => (
 								<ClubCard {...club} key={club.id}></ClubCard>
 							))}
