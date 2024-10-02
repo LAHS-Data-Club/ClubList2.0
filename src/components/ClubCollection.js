@@ -75,6 +75,7 @@ export default function ClubCollection() {
 			// localStorage.setItem("clubs", JSON.stringify(allData));
 			fuse.setCollection(allData);
 			setSearchResults(allData);
+			setDisplayedResults(allData.slice(0, 10));
 		}
 	}, [allData]);
 
