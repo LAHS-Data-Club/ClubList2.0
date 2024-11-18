@@ -117,6 +117,7 @@ export default function ClubCollection() {
 
 		if (query.$and.length === 0) {
 			setSearchResults(allData);
+			setDisplayedResults(allData.slice(0, 10));
 			return;
 		}
 
@@ -124,6 +125,7 @@ export default function ClubCollection() {
 		const items = results.map((result) => result.item);
 
 		setSearchResults(items);
+		setDisplayedResults(items.slice(0, 10));
 	}, [searchQuery, searchFields, dateFilters, timeFilters, tagFilters]);
 
 	const handleSearch = (event) => {
