@@ -1,3 +1,7 @@
+.glow {
+	position: relative;
+}
+
 .glow::before,
 .glow::after {
 	content: '';
