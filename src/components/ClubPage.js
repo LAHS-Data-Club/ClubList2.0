@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { readClubs } from '../firebase/firebaseRepository';
-import { generateMailto, parseLocation } from '../utilities';
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { readClubs } from "../firebase/firebaseRepository";
+import { generateMailto, parseLocation } from "../utilities";
 
 export default function ClubPage({}) {
 	let { id } = useParams();
@@ -16,8 +16,8 @@ export default function ClubPage({}) {
 		setLoading(true);
 
 		// Read values from local storage
-		let lastLoaded = Date.parse(localStorage.getItem('last_loaded'));
-		let clubs = JSON.parse(localStorage.getItem('clubs'));
+		let lastLoaded = Date.parse(localStorage.getItem("last_loaded"));
+		let clubs = JSON.parse(localStorage.getItem("clubs"));
 
 		// load clubs from firebase if specified time has passed / clubs is empty
 		if (
@@ -33,7 +33,7 @@ export default function ClubPage({}) {
 		} else {
 			setClubs(clubs);
 			setLoading(false);
-			console.log('Loaded clubs from local storage.');
+			console.log("Loaded clubs from local storage.");
 		}
 	}, []);
 
@@ -59,7 +59,7 @@ export default function ClubPage({}) {
 							</p>
 							{clubData.tags && (
 								<div className="flex flex-wrap gap-2 text-md mb-5">
-									{clubData.tags.split(', ').map((tag) => (
+									{clubData.tags.split(", ").map((tag) => (
 										<div
 											key={tag}
 											className="bg-white/50 rounded-full drop-shadow-md py-2 px-4"
@@ -191,7 +191,7 @@ export default function ClubPage({}) {
 							<a
 								href={generateMailto(
 									clubData.advisor_email,
-									clubData.name,
+									clubData.name
 								)}
 								onClick={(e) => {
 									e.stopPropagation();
@@ -218,7 +218,7 @@ export default function ClubPage({}) {
 							<a
 								href={generateMailto(
 									clubData.president_email,
-									clubData.name,
+									clubData.name
 								)}
 								onClick={(e) => {
 									e.stopPropagation();
