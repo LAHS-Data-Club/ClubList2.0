@@ -1,31 +1,31 @@
-import { readClubs } from "../firebase/firebaseRepository";
-import { useState, useEffect } from "react";
-import ClubCard from "./ClubCard";
-import Fuse from "fuse.js";
-import Search from "./Search";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { readClubs } from '../firebase/firebaseRepository';
+import { useState, useEffect } from 'react';
+import ClubCard from './ClubCard';
+import Fuse from 'fuse.js';
+import Search from './Search';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 // returns a list of unique values of that property
 function getUniqueValues(allData, property) {
 	return [...new Set(allData.map((doc) => doc[property]))].map((value) =>
-		value === "" ? "No Time Specified" : value
+		value === '' ? 'No Time Specified' : value,
 	);
 }
 
 export default function ClubCollection() {
 	const [loading, setLoading] = useState(true);
 	const [allData, setAllData] = useState([]);
-	const [searchQuery, setSearchQuery] = useState("");
+	const [searchQuery, setSearchQuery] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 	const [dateFilters, setDateFilters] = useState([]);
 	const [timeFilters, setTimeFilters] = useState([]);
 	const [tagFilters, setTagFilters] = useState([]);
 	const [searchFields, setSearchFields] = useState([
-		"name",
-		"description",
-		"day",
-		"time",
-		"tags",
+		'name',
+		'description',
+		'day',
+		'time',
+		'tags',
 	]);
 	const [displayedResults, setDisplayedResults] = useState([]);
 
@@ -46,8 +46,8 @@ export default function ClubCollection() {
 		setLoading(true);
 
 		// Read values from local storage
-		let lastLoaded = Date.parse(localStorage.getItem("last_loaded"));
-		let clubs = JSON.parse(localStorage.getItem("clubs"));
+		let lastLoaded = Date.parse(localStorage.getItem('last_loaded'));
+		let clubs = JSON.parse(localStorage.getItem('clubs'));
 
 		// load clubs from firebase if specified time has passed / clubs is empty
 		if (
@@ -65,7 +65,7 @@ export default function ClubCollection() {
 			setAllData(clubs);
 			setDisplayedResults(clubs.slice(0, 10));
 			setLoading(false);
-			console.log("Loaded clubs from local storage.");
+			console.log('Loaded clubs from local storage.');
 		}
 	}, []);
 
@@ -144,23 +144,6 @@ export default function ClubCollection() {
 					A project by the Data Club.
 				</div>
 			</div>
-			<p className="text-center">
-				Clubs are currently being updated for the school year. Please
-				check the spreadsheet below!
-			</p>
-		</div>
-	);
-
-	return (
-		<div className="p-5">
-			<div className="w-100 mb-6 mt-8 lg:mb-10 lg:mt-12">
-				<div className="text-4xl font-display font-bold text-center lg:text-left ">
-					LAHS Club List
-				</div>
-				<div className="italic font-body mt-1 text-center lg:text-left">
-					A project by the Data Club.
-				</div>
-			</div>
 			{loading && (
 				<div role="status">
 					<svg
@@ -193,34 +176,34 @@ export default function ClubCollection() {
 						timeFilters={timeFilters}
 						tagFilters={tagFilters}
 						dateValues={[
-							"Monday",
-							"Wednesday",
-							"Thursday",
-							"Friday",
+							'Monday',
+							'Wednesday',
+							'Thursday',
+							'Friday',
 						]}
-						timeValues={getUniqueValues(allData, "time")}
+						timeValues={getUniqueValues(allData, 'time')}
 						tagValues={[
-							"Helping Others",
-							"Awareness",
-							"Outreach",
-							"Teamwork",
-							"Community",
-							"Health/Disabilities",
-							"STEM",
-							"Diversity",
-							"Education",
-							"Competition",
-							"Design",
-							"Art",
-							"Creative",
-							"Leisure",
-							"Music",
-							"Cultural",
-							"Public Speaking",
-							"Leadership",
-							"Food",
-							"Computer Science",
-							"Sports",
+							'Helping Others',
+							'Awareness',
+							'Outreach',
+							'Teamwork',
+							'Community',
+							'Health/Disabilities',
+							'STEM',
+							'Diversity',
+							'Education',
+							'Competition',
+							'Design',
+							'Art',
+							'Creative',
+							'Leisure',
+							'Music',
+							'Cultural',
+							'Public Speaking',
+							'Leadership',
+							'Food',
+							'Computer Science',
+							'Sports',
 						]}
 					></Search>
 					<InfiniteScroll
@@ -230,9 +213,9 @@ export default function ClubCollection() {
 								displayedResults.concat(
 									searchResults.slice(
 										displayedResults.length,
-										displayedResults.length + 10
-									)
-								)
+										displayedResults.length + 10,
+									),
+								),
 							);
 						}}
 						hasMore={displayedResults.length < searchResults.length}
