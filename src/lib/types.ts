@@ -1,0 +1,31 @@
+// export interface OLDClub {
+//   id: number,
+//   day: string,
+//   time: string,
+//   description: string,
+//   location: string | number, 
+//   name: string,
+//   url: string,
+//   advisor: string,
+//   advisor_email: string,
+//   president: string,
+//   tags: string,
+//   sign_up?: string,
+//   president_email: string,
+//   tier: string,
+//   activities: string,
+// }
+
+export interface Club {
+  id: number,
+  tags: string[],
+  advisors: string,
+  time: string,
+  presidents: string,
+  description: string,
+  name: string,
+  day: string,
+  location: string,
+  tier: string,
+  url: string,
+}
