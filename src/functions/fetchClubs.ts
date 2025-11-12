@@ -25,6 +25,5 @@ export async function fetchClubs(): Promise<Club[]> {
     const dataClub = clubs.splice(dataClubIndex, 1);
     clubs.unshift(dataClub[0]);
   }
-  console.log(clubs);
   return clubs;
 }
