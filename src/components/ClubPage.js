@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { readClubs } from "../firebase/firebaseRepository";
 import { generateMailto, parseLocation } from "../utilities";
 
-export default function ClubPage({}) {
+export default function ClubPage({ }) {
 	let { id } = useParams();
 
 	const [loading, setLoading] = useState(true);
@@ -87,7 +87,7 @@ export default function ClubPage({}) {
 											/>
 										</svg>
 										<div className="align-baseline">
-											{clubData.day} {clubData.time}
+											{clubData.day}
 										</div>
 									</div>
 									<div className="flex items-start gap-1">
@@ -188,7 +188,7 @@ export default function ClubPage({}) {
 									<div className="min-w-max">Join!</div>
 								</a>
 							)}
-							<a
+							{/* <a
 								href={generateMailto(
 									clubData.advisor_email,
 									clubData.name
@@ -214,7 +214,7 @@ export default function ClubPage({}) {
 								</svg>
 
 								<div>Contact Advisor</div>
-							</a>
+							</a> */}
 							<a
 								href={generateMailto(
 									clubData.president_email,

@@ -10,7 +10,6 @@ export default function ClubCard({
     name,
     url,
     advisor,
-    advisor_email,
     president,
     president_email,
     tier,
@@ -123,7 +122,7 @@ export default function ClubCard({
                         <div className="min-w-max">Join!</div>
                     </a>
                 )} */}
-                <a
+                {/* <a
                     href={generateMailto(advisor_email, name)}
                     onClick={(e) => {
                         e.stopPropagation();
@@ -146,7 +145,7 @@ export default function ClubCard({
                     </svg>
 
                     <div>Contact Advisor</div>
-                </a>
+                </a> */}
                 <a
                     href={generateMailto(president_email, name)}
                     onClick={(e) => {

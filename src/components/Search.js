@@ -80,9 +80,8 @@ export default function Search({
 				<div className="ms-2">
 					<button
 						onClick={handleOpen}
-						className={`m-0 h-full text-body flex justify-center items-center gap-1 max-w-min p-2 rounded-md ${
-							open ? 'bg-white/70' : 'bg-white/50'
-						} drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75`}
+						className={`m-0 h-full text-body flex justify-center items-center gap-1 max-w-min p-2 rounded-md ${open ? 'bg-white/70' : 'bg-white/50'
+							} drop-shadow-md hover:drop-shadow-lg hover:bg-white/70 transition duration-75`}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +143,7 @@ export default function Search({
 							</div>
 						</div>
 						{/* Time filter */}
-						<div className="py-3">
+						{/* <div className="py-3">
 							<div className="font-bold text-lg mb-1">Times</div>
 							<div className="flex flex-wrap">
 								{timeValues.map((time) => (
@@ -173,7 +172,7 @@ export default function Search({
 									</div>
 								))}
 							</div>
-						</div>
+						</div> */}
 						{/* Tags filter */}
 						{/* <div className="py-3">
 							<div className="font-bold text-lg mb-1">Tags</div>
